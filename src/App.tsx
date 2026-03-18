@@ -64,7 +64,6 @@ function App() {
     return () => window.removeEventListener('message', onMessage)
   }, [handleIncomingData])
 
-  // 开发环境自动加载模拟数据，方便调试
   useEffect(() => {
     if (import.meta.env.DEV) {
       import('./mock/data').then(({ MOCK_IMAGES, MOCK_DSL }) =>
@@ -101,7 +100,7 @@ function App() {
     activeTab === 'result' ? '下载处理结果' : '下载原始图片'
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-800 font-sans">
+    <div className="min-h-screen bg-surface-0 text-ink-primary font-sans">
       <Navbar
         imageCount={currentImages.length}
         status={status}
@@ -112,44 +111,47 @@ function App() {
 
       <main className="max-w-7xl mx-auto px-6 py-8">
         {status === 'error' && (
-          <div className="bg-red-50 border border-red-200 text-red-700 rounded-lg px-4 py-3 text-sm mb-6">
+          <div className="animate-fade-in-up bg-danger-soft border border-danger/20 text-danger rounded-xl px-4 py-3 text-sm font-medium mb-8">
             处理失败，请检查控制台获取详情。
           </div>
         )}
 
         {status === 'done' && (
           <>
-            <div className="flex items-center gap-1 mb-6 bg-white rounded-lg p-1 border border-gray-200 shadow-sm w-fit">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer ${
-                    activeTab === tab.key
-                      ? 'bg-blue-600 text-white shadow-sm'
-                      : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-                  }`}
-                >
-                  {tab.label}
-                  <span
-                    className={`ml-1.5 text-xs ${
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-0.5 bg-surface-2 rounded-xl p-1 border border-border">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.key}
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`relative px-4 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200 cursor-pointer ${
                       activeTab === tab.key
-                        ? 'text-blue-200'
-                        : 'text-gray-400'
+                        ? 'bg-ink-primary text-surface-2 shadow-sm'
+                        : 'text-ink-muted hover:text-ink-secondary'
                     }`}
                   >
-                    {tab.count}
-                  </span>
-                </button>
-              ))}
+                    {tab.label}
+                    <span
+                      className={`ml-1.5 font-mono text-[11px] tabular-nums ${
+                        activeTab === tab.key
+                          ? 'text-surface-2/50'
+                          : 'text-ink-muted/60'
+                      }`}
+                    >
+                      {tab.count}
+                    </span>
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {currentImages.map((img) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+              {currentImages.map((img, i) => (
                 <BoardCard
                   key={img.id}
                   image={img}
                   variant={activeTab === 'original' ? 'original' : 'result'}
+                  index={i}
                 />
               ))}
             </div>

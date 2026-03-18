@@ -1,4 +1,4 @@
-import { LayoutDashboard, Package } from 'lucide-react'
+import { Package, Layers } from 'lucide-react'
 import type { ProcessStatus } from '../types'
 
 interface NavbarProps {
@@ -19,37 +19,36 @@ export function Navbar({
   const showDownload = status === 'done' && imageCount > 0
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-10 shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="bg-blue-600 p-2 rounded-lg">
-            <LayoutDashboard className="w-5 h-5 text-white" />
+    <nav className="bg-surface-2/80 backdrop-blur-xl border-b border-border sticky top-0 z-10">
+      <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-accent flex items-center justify-center">
+            <Layers className="w-4 h-4 text-white" strokeWidth={2.5} />
           </div>
-          <h1 className="text-xl font-bold text-gray-900">自动化资源看板</h1>
+          <span className="text-[15px] font-semibold text-ink-primary tracking-tight">
+            资源看板
+          </span>
         </div>
 
         {showDownload && (
-          <div className="flex items-center gap-4">
-            <div className="text-sm text-gray-500">
-              共{' '}
-              <span className="font-semibold text-gray-900">
-                {imageCount}
-              </span>{' '}
-              张图片
-            </div>
+          <div className="flex items-center gap-5">
+            <span className="text-xs text-ink-muted font-mono tabular-nums">
+              {imageCount} 项
+            </span>
 
             <button
               onClick={onDownloadAll}
               disabled={isZipping}
-              className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 shadow-sm cursor-pointer"
+              className="flex items-center gap-1.5 bg-ink-primary hover:bg-accent text-surface-2 pl-3.5 pr-4 py-1.5 rounded-lg text-[13px] font-medium transition-all duration-200 disabled:opacity-40 cursor-pointer"
             >
               {isZipping ? (
-                <span className="animate-pulse flex items-center gap-2">
-                  <Package className="w-4 h-4" /> 打包中...
+                <span className="flex items-center gap-1.5" style={{ animation: 'pulse-gentle 1.5s ease-in-out infinite' }}>
+                  <Package className="w-3.5 h-3.5" />
+                  打包中…
                 </span>
               ) : (
                 <>
-                  <Package className="w-4 h-4" />
+                  <Package className="w-3.5 h-3.5" />
                   {downloadLabel}
                 </>
               )}

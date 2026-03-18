@@ -1,5 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Space+Mono:wght@400;700&display=swap');
 @import 'tailwindcss';
+
+@theme {
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+
+  --color-surface-0: oklch(0.985 0.005 250);
+  --color-surface-1: oklch(0.97 0.006 250);
+  --color-surface-2: oklch(1 0.003 250);
+  --color-surface-3: oklch(0.955 0.008 250);
+
+  --color-ink-primary: oklch(0.22 0.02 260);
+  --color-ink-secondary: oklch(0.45 0.015 260);
+  --color-ink-muted: oklch(0.6 0.01 260);
+
+  --color-accent: oklch(0.55 0.18 255);
+  --color-accent-soft: oklch(0.92 0.04 255);
+  --color-accent-hover: oklch(0.48 0.18 255);
+
+  --color-success: oklch(0.6 0.16 155);
+  --color-success-soft: oklch(0.93 0.04 155);
+  --color-info: oklch(0.55 0.14 250);
+  --color-info-soft: oklch(0.93 0.04 250);
+  --color-danger: oklch(0.55 0.18 25);
+  --color-danger-soft: oklch(0.93 0.05 25);
+
+  --color-border: oklch(0.9 0.008 250);
+  --color-border-strong: oklch(0.84 0.012 250);
+}
 
 body {
   margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--color-surface-0);
+  color: var(--color-ink-primary);
 }
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-gentle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.7; }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.stagger-1 { animation-delay: 0.03s; }
+.stagger-2 { animation-delay: 0.06s; }
+.stagger-3 { animation-delay: 0.09s; }
+.stagger-4 { animation-delay: 0.12s; }
+.stagger-5 { animation-delay: 0.15s; }
+.stagger-6 { animation-delay: 0.18s; }
+.stagger-7 { animation-delay: 0.21s; }
+.stagger-8 { animation-delay: 0.24s; }
