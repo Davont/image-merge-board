@@ -10,7 +10,8 @@ const EXT_MAP: Record<string, string> = {
   'image/bmp': '.bmp',
 }
 
-function getExt(blob: Blob): string {
+function getExt(blob: Blob | string): string {
+  if (typeof blob === 'string') return '.png'
   return EXT_MAP[blob.type] || '.png'
 }
 
