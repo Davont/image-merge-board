@@ -1,5 +1,19 @@
 import type { OutputImage, InputImage } from '../types'
 
+/** 根据 Blob MIME 类型推断文件扩展名 */
+const EXT_MAP: Record<string, string> = {
+  'image/png': '.png',
+  'image/jpeg': '.jpg',
+  'image/webp': '.webp',
+  'image/gif': '.gif',
+  'image/svg+xml': '.svg',
+  'image/bmp': '.bmp',
+}
+
+function getExt(blob: Blob): string {
+  return EXT_MAP[blob.type] || '.png'
+}
+
 export async function downloadResultAsZip(
   images: OutputImage[],
   code: string,
@@ -9,7 +23,7 @@ export async function downloadResultAsZip(
 
   const imgFolder = zip.folder('images')!
   images.forEach((img) => {
-    imgFolder.file(`${img.id}.png`, img.blob)
+    imgFolder.file(`${img.id}${getExt(img.blob)}`, img.blob)
   })
 
   zip.file('output.html', code)
@@ -25,7 +39,7 @@ export async function downloadOriginalAsZip(
 
   const imgFolder = zip.folder('images')!
   images.forEach((img) => {
-    imgFolder.file(`${img.id}.png`, img.blob)
+    imgFolder.file(`${img.id}${getExt(img.blob)}`, img.blob)
   })
 
   await triggerDownload(zip, `original_images_${Date.now()}.zip`)
